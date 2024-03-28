@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../assets/colors/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -18,9 +19,11 @@ class _LoginPageState extends State<LoginPage> {
   bool validateAndSave() {
     final form = formKey.currentState;
     if (form!.validate()) {
+      print("Form is valid");
       form.save();
       return true;
     } else {
+      print("Form is invalid");
       return false;
     }
   }
@@ -30,7 +33,8 @@ class _LoginPageState extends State<LoginPage> {
       if (validateAndSave()) {
         UserCredential user = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: _email!, password: _password!);
-        Navigator.pushNamed(context, '/home');
+        print("Usuário logado: ${user.user!.uid}");
+        context.go('/home');
       }
     } catch (e) {
       if (e is FirebaseAuthException) {
@@ -42,10 +46,12 @@ class _LoginPageState extends State<LoginPage> {
             erroMessage = 'Senha errada';
             break;
           default:
-            erroMessage = 'Erro desconhecido';
+            erroMessage = 'Erro';
+            print(e);
         }
       } else {
-        erroMessage = 'Erro desconhecido';
+        erroMessage = 'Erro';
+        print(e);
       }
       mensagem(context, erroMessage);
     }
@@ -110,12 +116,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Form(
+                key: formKey,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 24),
                   child: Column(
                     children: [
                       TextFormField(
+                        validator: (value) => value!.isEmpty ? 'Campo obrigatório' : null,
+                        onSaved: (value) => _email = value,
                         textInputAction: TextInputAction.next,
                         style: const TextStyle(
                           color: AppColors.blackApp,
@@ -137,7 +146,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           hintText: 'Digite seu email',
-                          labelText: 'Email:',
                           labelStyle: const TextStyle(
                               color: AppColors.blackApp, fontSize: 18),
                         ),
@@ -145,17 +153,13 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 24),
                       TextFormField(
+                        validator: (value) => value!.isEmpty ? 'Campo obrigatório' : null,
+                        onSaved: (value) => _password = value,
                         textInputAction: TextInputAction.next,
                         style: const TextStyle(
                           color: AppColors.blackApp,
                         ),
                         obscureText: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Este campo é obrigatório.';
-                          }
-                          return null;
-                        },
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: AppColors.whiteApp,
@@ -184,7 +188,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: double.maxFinite,
                         height: 52,
                         child: ElevatedButton(
-                          onPressed: () => context.go('/home'),
+                          onPressed: validateAndSubmit,
                           style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.greenApp,
                               elevation: 3,

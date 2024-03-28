@@ -1,6 +1,6 @@
-import 'package:app_fisio_tcc/assets/colors/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../assets/colors/colors.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});

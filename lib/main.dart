@@ -1,4 +1,4 @@
-import 'package:app_fisio_tcc/pages/login_page.dart';
+import 'pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'pages/createAccount_page.dart';
 import 'pages/home_page.dart';
@@ -6,8 +6,16 @@ import 'pages/paciente_page.dart';
 import 'pages/exercicios_page.dart';
 import 'pages/historico_page.dart';
 import 'package:go_router/go_router.dart';
+import 'firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  try{
+   await Firebase.initializeApp( 
+      options: DefaultFirebaseOptions.currentPlatform);
+    runApp(const MyApp()); 
+  }catch(e){e;}
   runApp(const MyApp());
 }
 
