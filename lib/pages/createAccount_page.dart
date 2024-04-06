@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import '../assets/theme_app.dart';
 
@@ -15,6 +16,41 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   String? _password;
   String? _name;
   String? erroMessage;
+
+  bool validateAndSave() {
+    final form = formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void validateAndSubmit() async {
+    if (validateAndSave()) {
+      try {
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: _email!,
+          password: _password!,
+        );
+        await userCredential.user!.updateDisplayName(_name);
+        context.go('/home');
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          erroMessage = 'A senha fornecida é muito fraca';
+        } else if (e.code == 'email-already-in-use') {
+          erroMessage = 'Esse e-mail já está em uso';
+        } else {
+          erroMessage = 'Erro desconhecido';
+        }
+        mensagem(context, erroMessage);
+      } catch (e) {
+        erroMessage = 'Erro desconhecido';
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,8 +103,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                   child: Column(
                     children: [
                       TextFormField(
+                        validator: (value) =>
+                            value!.isEmpty ? 'Campo obrigatório' : null,
+                        onSaved: (value) => _name = value,
                         textInputAction: TextInputAction.next,
-                        style: AppTheme.themeData.inputDecorationTheme.labelStyle,
+                        style:
+                            AppTheme.themeData.inputDecorationTheme.labelStyle,
                         decoration: const InputDecoration(
                           hintText: 'Digite seu nome',
                           labelText: 'nome:',
@@ -76,8 +116,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       ),
                       const SizedBox(height: 24),
                       TextFormField(
+                        validator: (value) =>
+                            value!.isEmpty ? 'Campo obrigatório' : null,
+                        onSaved: (value) => _email = value,
                         textInputAction: TextInputAction.next,
-                        style: AppTheme.themeData.inputDecorationTheme.labelStyle,
+                        style:
+                            AppTheme.themeData.inputDecorationTheme.labelStyle,
                         decoration: const InputDecoration(
                           hintText: 'Digite seu email',
                           labelText: 'email:',
@@ -85,8 +129,12 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       ),
                       const SizedBox(height: 24),
                       TextFormField(
+                        validator: (value) =>
+                            value!.isEmpty ? 'Campo obrigatório' : null,
+                        onSaved: (value) => _password = value,
                         textInputAction: TextInputAction.next,
-                        style: AppTheme.themeData.inputDecorationTheme.labelStyle,
+                        style:
+                            AppTheme.themeData.inputDecorationTheme.labelStyle,
                         obscureText: true,
                         decoration: const InputDecoration(
                           hintText: 'Digite sua senha',
@@ -98,7 +146,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         width: double.maxFinite,
                         height: 52,
                         child: ElevatedButton(
-                          onPressed: () => context.go('/home'),
+                          onPressed: validateAndSubmit,
                           style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.greenApp,
                               elevation: 3,
@@ -145,4 +193,17 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       ),
     );
   }
+   void mensagem(BuildContext context, String? erroMessage){
+    final snackBar = SnackBar(
+      content: Text(erroMessage!),
+      action: SnackBarAction(
+        label: 'Fechar',
+        onPressed: (){
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  } 
 }
+
