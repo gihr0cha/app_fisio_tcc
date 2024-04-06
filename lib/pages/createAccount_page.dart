@@ -10,6 +10,12 @@ class CreateAccountPage extends StatefulWidget {
 }
 
 class _CreateAccountPageState extends State<CreateAccountPage> {
+  final formKey = GlobalKey<FormState>();
+  String? _email;
+  String? _password;
+  String? _name;
+  String? erroMessage;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +62,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 ),
               ),
               Form(
+                key: formKey,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 24),
@@ -101,12 +108,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         style: const TextStyle(
                           color: AppColors.blackApp,
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Este campo é obrigatório.';
-                          }
-                          return null;
-                        },
+                        validator: (value) => value!.isEmpty ? 'Campo obrigatório' : null,
+                        
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: AppColors.whiteApp,
