@@ -8,6 +8,7 @@ import 'pages/historico_page.dart';
 import 'package:go_router/go_router.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'pages/registerPacients_page.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +24,7 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
   GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const LoginPage();
+        return const HomePage();
       },
       routes: <RouteBase>[
         GoRoute(
@@ -51,6 +52,11 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             builder: (BuildContext context, GoRouterState state) {
               return const HistoricoPage();
             }),
+            GoRoute(path:'registerPacients',
+            builder: (BuildContext context, GoRouterState state){
+              return const RegisterPacients();
+            }
+            )
       ])
 ]);
 

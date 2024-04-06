@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../assets/theme_app.dart';
 
 class RegisterPacients extends StatefulWidget {
   const RegisterPacients({super.key});
@@ -18,7 +19,7 @@ class _RegisterPacientsState extends State<RegisterPacients> {
         Row(
           children: [
             IconButton(
-                onPressed: () => context.go('/'),
+                onPressed: () => context.go('/home'),
                 icon: const Icon(Icons.arrow_back))
           ],
         ),
@@ -29,6 +30,7 @@ class _RegisterPacientsState extends State<RegisterPacients> {
             child: Column(
           children: [
             TextFormField(
+              style: AppTheme.themeData.inputDecorationTheme.labelStyle,
               decoration: InputDecoration(
                   label: const Text(
                     'Nome completo:',
@@ -40,6 +42,7 @@ class _RegisterPacientsState extends State<RegisterPacients> {
             ),
             const SizedBox(height: 24),
             TextFormField(
+              style: AppTheme.themeData.inputDecorationTheme.labelStyle,
               decoration: InputDecoration(
                   label: const Text(
                     'Email:',
@@ -51,6 +54,7 @@ class _RegisterPacientsState extends State<RegisterPacients> {
             ),
             const SizedBox(height: 24),
             TextFormField(
+              style: AppTheme.themeData.inputDecorationTheme.labelStyle,
               decoration: InputDecoration(
                   label: const Text(
                     'Data de Nacimento:',
@@ -61,15 +65,15 @@ class _RegisterPacientsState extends State<RegisterPacients> {
                       borderRadius: BorderRadius.circular(12))),
             ),
             const SizedBox(height: 24),
-            SizedBox(
-              width: double.maxFinite,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(),
-                child: const Text(
-                  'Entrar',
-                ),
-              ),
+            ButtonBar(
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      // Salvar no banco de dados
+                      context.go('/pacientes');
+                    },
+                    child: const Text('Salvar')),
+              ],                  
             )
           ],
         ))

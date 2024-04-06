@@ -40,6 +40,7 @@ class NavigacaoBar extends StatelessWidget {
           if (index == 3) {
             context.go('/historico');
           }
+          
         });
   }
 }
