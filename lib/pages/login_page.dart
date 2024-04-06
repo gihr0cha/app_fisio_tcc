@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../assets/colors/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../assets/theme_app.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -123,63 +124,25 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       TextFormField(
+                        style: AppTheme.themeData.inputDecorationTheme.labelStyle,
                         validator: (value) => value!.isEmpty ? 'Campo obrigatório' : null,
                         onSaved: (value) => _email = value,
                         textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                          color: AppColors.blackApp,
-                        ),
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColors.whiteApp,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                         decoration: const InputDecoration(
+                          labelText: 'Email:',
                           hintText: 'Digite seu email',
-                          labelStyle: const TextStyle(
-                              color: AppColors.blackApp, fontSize: 18),
                         ),
-                        cursorColor: AppColors.greyApp,
                       ),
                       const SizedBox(height: 24),
                       TextFormField(
+                        style: AppTheme.themeData.inputDecorationTheme.labelStyle,
                         validator: (value) => value!.isEmpty ? 'Campo obrigatório' : null,
                         onSaved: (value) => _password = value,
                         textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                          color: AppColors.blackApp,
-                        ),
                         obscureText: true,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColors.whiteApp,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                        decoration: const InputDecoration(
                           labelText: 'Senha:',
                           hintText: 'Digite sua senha',
-                          labelStyle: const TextStyle(
-                              color: AppColors.blackApp, fontSize: 18),
                         ),
                         cursorColor: AppColors.greyApp,
                       ),
@@ -189,15 +152,11 @@ class _LoginPageState extends State<LoginPage> {
                         height: 52,
                         child: ElevatedButton(
                           onPressed: validateAndSubmit,
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.greenApp,
-                              elevation: 3,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              )),
+                          
                           child: const Text(
                             'Entrar',
                             style: TextStyle(
+                              
                                 color: AppColors.whiteApp,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600),
@@ -209,18 +168,11 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           const Text(
                             'Não possui uma conta?',
-                            style: TextStyle(
-                                fontSize: 16, color: AppColors.greyApp),
                           ),
                           TextButton(
                             onPressed: () => context.go('/createAccount'),
                             child: const Text(
                               'Clique aqui!',
-                              style: TextStyle(
-                                color: AppColors.greyApp,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                              ),
                             ),
                           ),
                         ],

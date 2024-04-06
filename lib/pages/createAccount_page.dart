@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../assets/colors/colors.dart';
+import '../assets/theme_app.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key});
@@ -24,8 +24,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
                 colors: [AppColors.greenApp, AppColors.gradienteBaixo],
               ),
             ),
@@ -70,175 +68,30 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     children: [
                       TextFormField(
                         textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                          color: AppColors.blackApp,
+                        style: AppTheme.themeData.inputDecorationTheme.labelStyle,
+                        decoration: const InputDecoration(
+                          hintText: 'Digite seu nome',
+                          labelText: 'nome:',
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Este campo é obrigatório.';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColors.whiteApp,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                      ),
+                      const SizedBox(height: 24),
+                      TextFormField(
+                        textInputAction: TextInputAction.next,
+                        style: AppTheme.themeData.inputDecorationTheme.labelStyle,
+                        decoration: const InputDecoration(
                           hintText: 'Digite seu email',
-                          labelText: 'Email:',
-                          labelStyle: const TextStyle(
-                              color: AppColors.blackApp, fontSize: 18),
+                          labelText: 'email:',
                         ),
-                        cursorColor: AppColors.greyApp,
                       ),
                       const SizedBox(height: 24),
                       TextFormField(
                         textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                          color: AppColors.blackApp,
-                        ),
-                        validator: (value) => value!.isEmpty ? 'Campo obrigatório' : null,
-                        
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColors.whiteApp,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          hintText: 'Confirme seu Email',
-                          labelText: 'Confirme seu Email:',
-                          labelStyle: const TextStyle(
-                              color: AppColors.blackApp, fontSize: 18),
-                        ),
-                        cursorColor: AppColors.greyApp,
-                      ),
-                      const SizedBox(height: 24),
-                      TextFormField(
-                        textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                          color: AppColors.blackApp,
-                        ),
+                        style: AppTheme.themeData.inputDecorationTheme.labelStyle,
                         obscureText: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Este campo é obrigatório.';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColors.whiteApp,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          labelText: 'Senha:',
+                        decoration: const InputDecoration(
                           hintText: 'Digite sua senha',
-                          labelStyle: const TextStyle(
-                              color: AppColors.blackApp, fontSize: 18),
+                          labelText: 'senha:',
                         ),
-                        cursorColor: AppColors.greyApp,
-                      ),
-                      const SizedBox(height: 24),
-                      TextFormField(
-                        textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                          color: AppColors.blackApp,
-                        ),
-                        obscureText: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Este campo é obrigatório.';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColors.whiteApp,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          labelText: 'Confirme sua Senha:',
-                          hintText: 'Confirme sua senha',
-                          labelStyle: const TextStyle(
-                              color: AppColors.blackApp, fontSize: 18),
-                        ),
-                        cursorColor: AppColors.greyApp,
-                      ),
-                      const SizedBox(height: 24),
-                      TextFormField(
-                        textInputAction: TextInputAction.next,
-                        style: const TextStyle(
-                          color: AppColors.blackApp,
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Este campo é obrigatório.';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: AppColors.whiteApp,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.never,
-                          hintText: 'Digite seu Nome',
-                          labelText: 'Digite seu Nome:',
-                          labelStyle: const TextStyle(
-                              color: AppColors.blackApp, fontSize: 18),
-                        ),
-                        cursorColor: AppColors.greyApp,
                       ),
                       const SizedBox(height: 50),
                       SizedBox(
